@@ -2,7 +2,7 @@
 
 // Uncomment the relevant device type for this device.
 #define DOOR
-//define INTERLOCK
+//#define INTERLOCK
 
 // Uncomment for RFID reader types.
 //#define OLD
@@ -73,7 +73,7 @@ void checkStateMachine();
 
 // Main fuctions
 void log(String);
-void stausLight(char);
+void statusLight(char);
 void clearTags();
 void checkIn();
 void printTags();
