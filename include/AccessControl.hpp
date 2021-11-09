@@ -80,3 +80,4 @@ void printTags();
 void loadTags();
 void printCache();
 void getCache();
+void toggleContact();
