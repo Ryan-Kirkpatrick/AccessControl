@@ -30,7 +30,7 @@ void IRAM_ATTR checkInSession(String sessionGUID, uint32_t cardNo) {
     }
   } else {
     log("[SESSION] Heartbeat Error: " + client.errorToString(httpCode));
-    statusLight('y');
+    statusLight(CRGB::Yellow);
   }
   client.end();
   log("[SESSION] Session Heartbeat Done.");
@@ -45,7 +45,7 @@ void handleCard(long cardId) {
   if (cardId != lastId) {
     if (!contact) {
       log("[AUTH] Tag is new, checking authentication.");
-      statusLight('w');
+      statusLight(CRGB::White);
       Serial.println(millis());
       authCard(cardId);
     } else {
@@ -57,7 +57,7 @@ void handleCard(long cardId) {
         checkInSession(sessionID, cardId);
       }
       // Update the user that swipe timeout has begun.
-      statusLight('w');
+      statusLight(CRGB::White);
       lastId = 0;
       // Clear temp globals.
       sessionID = "";
@@ -71,7 +71,7 @@ void handleCard(long cardId) {
       checkInSession(sessionID, cardId);
     }
     // Update the user that swipe timeout has begun.
-    statusLight('w');
+    statusLight(CRGB::White);
     lastId = 0;
     // Clear temp globals.
     sessionID = "";
@@ -85,14 +85,14 @@ void toggleContact() {
       {
         contact = 1;
         digitalWrite(switchPin, HIGH);
-        statusLight('w');
+        statusLight(CRGB::White);
         break;
       }
     case 1:
       {
         contact = 0;
         digitalWrite(switchPin, LOW);
-        statusLight('b');
+        statusLight(CRGB::Blue);
         break;
       }
   }
@@ -127,7 +127,7 @@ void authCard(long tagid) {
           heartbeatSession.attach(sessionCheckinRate, activeHeartBeatFlag);
         } else {
           log("[AUTH] Access not granted.");
-          statusLight('r');
+          statusLight(CRGB::Red);
           delay(1000);
         }
         // Clear the json object now.
@@ -136,7 +136,7 @@ void authCard(long tagid) {
       }
     } else {
       log("[AUTH] Error: " + client.errorToString(httpCode));
-      statusLight('y');
+      statusLight(CRGB::Yellow);
     }
     client.end();
     log("[AUTH] Card Auth done.");
@@ -157,7 +157,7 @@ void authCard(long tagid) {
           if (tagsArray[i] < 1) {
             // Check to see if this is the last tag in the cache, if so error.
             log("[AUTH] Cached Access not granted.");
-            statusLight('r');
+            statusLight(CRGB::Red);
             delay(1000);
             break;
           }
